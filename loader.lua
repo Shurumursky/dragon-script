@@ -1,12 +1,12 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
- Name = "RUAJAD HUB V2.0 | Dragon Adventures",
+ Name = "Shurumursky Hub | Dragon Adventures",
  LoadingTitle = "Загрузка хаба...",
- LoadingSubtitle = "by custom",
+ LoadingSubtitle = "by Shurumursky",
  ConfigurationSaving = {
  Enabled = false,
- FolderName = "RuajadHub",
+ FolderName = "ShurumurskyHub",
  FileName = "Config"
  },
  KeySystem = false,
@@ -22,7 +22,17 @@ MainTab:CreateToggle({
  Name = "Auto-fly & Lock Position",
  CurrentValue = false,
  Callback = function(Value)
- -- сюда логику автофлая
+ _G.AutoFly = Value
+ local LocalPlayer = game:GetService("Players").LocalPlayer
+ task.spawn(function()
+ while _G.AutoFly do
+ task.wait(0.1)
+ if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+ local hrp = LocalPlayer.Character.HumanoidRootPart
+ hrp.Velocity = Vector3.new(0, 0, 0)
+ end
+ end
+ end)
  end,
 })
 
@@ -32,7 +42,23 @@ FarmingTab:CreateToggle({
  Name = "Auto Farm Resource Nodes",
  CurrentValue = false,
  Callback = function(Value)
- -- логика ресурсов
+ _G.AutoResources = Value
+ task.spawn(function()
+ while _G.AutoResources do
+ task.wait(1)
+ for _, obj in pairs(workspace:GetDescendants()) do
+ if not _G.AutoResources then break end
+ if obj:IsA("Model") and (obj.Name:lower():find("rock") or obj.Name:lower():find("tree") or obj.Name:lower():find("plant")) then
+ local part = obj.PrimaryPart or obj:FindFirstChildWhichIsA("BasePart")
+ local lp = game:GetService("Players").LocalPlayer
+ if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
+ lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
+ task.wait(0.5)
+ end
+ end
+ end
+ end
+ end)
  end,
 })
 
@@ -40,11 +66,26 @@ FarmingTab:CreateToggle({
  Name = "Auto Collect Eggs",
  CurrentValue = false,
  Callback = function(Value)
- -- логика яиц
+ _G.AutoEggs = Value
+ task.spawn(function()
+ while _G.AutoEggs do
+ task.wait(1)
+ for _, egg in pairs(workspace:GetDescendants()) do
+ if not _G.AutoEggs then break end
+ if egg:IsA("Model") and egg.Name:lower():find("egg") then
+ local part = egg.PrimaryPart or egg:FindFirstChildWhichIsA("BasePart")
+ local lp = game:GetService("Players").LocalPlayer
+ if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
+ lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0)
+ task.wait(0.5)
+ end
+ end
+ end
+ end
+ end)
  end,
 })
 
--- Автофарм мобов
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
@@ -88,14 +129,20 @@ TeleportTab:CreateSection("Миры")
 TeleportTab:CreateButton({
  Name = "Origins",
  Callback = function()
- -- телепорт в ориджинс
+ local lp = game:GetService("Players").LocalPlayer
+ if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
+ lp.Character.HumanoidRootPart.CFrame = CFrame.new(0, 50, 0)
+ end
  end,
 })
 
 TeleportTab:CreateButton({
  Name = "Grassland",
  Callback = function()
- -- телепорт в грассленд
+ local lp = game:GetService("Players").LocalPlayer
+ if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
+ lp.Character.HumanoidRootPart.CFrame = CFrame.new(500, 50, 500)
+ end
  end,
 })
 
