@@ -43,6 +43,7 @@ FarmingTab:CreateToggle({
  CurrentValue = false,
  Callback = function(Value)
  _G.AutoResources = Value
+ local vim = game:GetService("VirtualInputManager")
  task.spawn(function()
  while _G.AutoResources do
  task.wait(0.5)
@@ -53,7 +54,11 @@ FarmingTab:CreateToggle({
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
  lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0)
- task.wait(1.5)
+ task.wait(0.3)
+ vim:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+ task.wait(0.1)
+ vim:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+ task.wait(1)
  end
  end
  end
@@ -67,6 +72,7 @@ FarmingTab:CreateToggle({
  CurrentValue = false,
  Callback = function(Value)
  _G.AutoEggs = Value
+ local vim = game:GetService("VirtualInputManager")
  task.spawn(function()
  while _G.AutoEggs do
  task.wait(0.5)
@@ -77,7 +83,11 @@ FarmingTab:CreateToggle({
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
  lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 2, 0)
- task.wait(1.5)
+ task.wait(0.3)
+ vim:SendKeyEvent(true, Enum.KeyCode.E, false, game)
+ task.wait(0.1)
+ vim:SendKeyEvent(false, Enum.KeyCode.E, false, game)
+ task.wait(1)
  end
  end
  end
@@ -117,7 +127,7 @@ FarmingTab:CreateToggle({
  local target = getClosestMonster()
  if target and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
  local hrp = LocalPlayer.Character.HumanoidRootPart
- hrp.CFrame = target.HumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
+ hrp.CFrame = target.HumanoidRootPart.CFrame + Vector3.new(0, 5,0)
  end
  end
  end)
@@ -131,7 +141,7 @@ TeleportTab:CreateButton({
  Callback = function()
  local lp = game:GetService("Players").LocalPlayer
  if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
- lp.Character.HumanoidRootPart.CFrame = CFrame.new(-120, 30, 250)
+ lp.Character.HumanoidRootPart.CFrame = CFrame.new(200, 50, 150)
  end
  end,
 })
@@ -141,7 +151,7 @@ TeleportTab:CreateButton({
  Callback = function()
  local lp = game:GetService("Players").LocalPlayer
  if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
- lp.Character.HumanoidRootPart.CFrame = CFrame.new(1000, 50, 1000)
+ lp.Character.HumanoidRootPart.CFrame = CFrame.new(450, 50, 300)
  end
  end,
 })
