@@ -29,7 +29,7 @@ MainTab:CreateToggle({
  task.wait(0.1)
  if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
  local hrp = LocalPlayer.Character.HumanoidRootPart
- hrp.Velocity = Vector3.new(0, 0, 0)
+ hrp.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
  end
  end
  end)
@@ -46,19 +46,19 @@ FarmingTab:CreateToggle({
  local vim = game:GetService("VirtualInputManager")
  task.spawn(function()
  while _G.AutoResources do
- task.wait(0.5)
+ task.wait(1)
  for _, obj in pairs(workspace:GetDescendants()) do
  if not _G.AutoResources then break end
- if obj:IsA("Model") and (obj.Name:lower():find("rock") or obj.Name:lower():find("tree") or obj.Name:lower():find("plant")) then
+ if obj:IsA("Model") and obj:FindFirstChild("Health") or (obj.Name:lower():find("wood") or obj.Name:lower():find("fruit") or obj.Name:lower():find("plant") or obj.Name:lower():find("rock")) then
  local part = obj.PrimaryPart or obj:FindFirstChildWhichIsA("BasePart")
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
- lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0)
- task.wait(0.3)
+ lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 4, 0)
+ task.wait(0.5)
  vim:SendKeyEvent(true, Enum.KeyCode.E, false, game)
  task.wait(0.1)
  vim:SendKeyEvent(false, Enum.KeyCode.E, false, game)
- task.wait(1)
+ task.wait(2)
  end
  end
  end
@@ -75,19 +75,19 @@ FarmingTab:CreateToggle({
  local vim = game:GetService("VirtualInputManager")
  task.spawn(function()
  while _G.AutoEggs do
- task.wait(0.5)
+ task.wait(1)
  for _, egg in pairs(workspace:GetDescendants()) do
  if not _G.AutoEggs then break end
  if egg:IsA("Model") and egg.Name:lower():find("egg") then
  local part = egg.PrimaryPart or egg:FindFirstChildWhichIsA("BasePart")
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
- lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 2, 0)
- task.wait(0.3)
+ lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0)
+ task.wait(0.5)
  vim:SendKeyEvent(true, Enum.KeyCode.E, false, game)
  task.wait(0.1)
  vim:SendKeyEvent(false, Enum.KeyCode.E, false, game)
- task.wait(1)
+ task.wait(2)
  end
  end
  end
@@ -103,13 +103,13 @@ local function getClosestMonster()
  local target = nil
  local shortestDist = math.huge
  
- for _, v in pairs(workspace:GetChildren()) do
- if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Name ~= "Player" then
+ for _, v in pairs(workspace:GetDescendants()) do
+ if v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v ~= LocalPlayer.Character then
  local dist = (LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
  if dist < shortestDist then
  shortestDist = dist
  target = v
- end
+end
  end
  end
  
@@ -123,11 +123,11 @@ FarmingTab:CreateToggle({
  _G.AutoMonster = Value
  task.spawn(function()
  while _G.AutoMonster do
- task.wait(0.3)
+ task.wait(0.5)
  local target = getClosestMonster()
  if target and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
  local hrp = LocalPlayer.Character.HumanoidRootPart
- hrp.CFrame = target.HumanoidRootPart.CFrame + Vector3.new(0, 5,0)
+ hrp.CFrame = target.HumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
  end
  end
  end)
