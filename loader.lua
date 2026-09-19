@@ -45,15 +45,15 @@ FarmingTab:CreateToggle({
  _G.AutoResources = Value
  task.spawn(function()
  while _G.AutoResources do
- task.wait(1)
+ task.wait(0.5)
  for _, obj in pairs(workspace:GetDescendants()) do
  if not _G.AutoResources then break end
  if obj:IsA("Model") and (obj.Name:lower():find("rock") or obj.Name:lower():find("tree") or obj.Name:lower():find("plant")) then
  local part = obj.PrimaryPart or obj:FindFirstChildWhichIsA("BasePart")
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
- lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
- task.wait(0.5)
+ lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0)
+ task.wait(1.5)
  end
  end
  end
@@ -69,15 +69,15 @@ FarmingTab:CreateToggle({
  _G.AutoEggs = Value
  task.spawn(function()
  while _G.AutoEggs do
- task.wait(1)
+ task.wait(0.5)
  for _, egg in pairs(workspace:GetDescendants()) do
  if not _G.AutoEggs then break end
  if egg:IsA("Model") and egg.Name:lower():find("egg") then
  local part = egg.PrimaryPart or egg:FindFirstChildWhichIsA("BasePart")
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
- lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0)
- task.wait(0.5)
+ lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 2, 0)
+ task.wait(1.5)
  end
  end
  end
@@ -113,11 +113,11 @@ FarmingTab:CreateToggle({
  _G.AutoMonster = Value
  task.spawn(function()
  while _G.AutoMonster do
- task.wait(0.5)
+ task.wait(0.3)
  local target = getClosestMonster()
  if target and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
  local hrp = LocalPlayer.Character.HumanoidRootPart
- hrp.CFrame = target.HumanoidRootPart.CFrame + Vector3.new(0, 15, 0)
+ hrp.CFrame = target.HumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
  end
  end
  end)
@@ -131,7 +131,7 @@ TeleportTab:CreateButton({
  Callback = function()
  local lp = game:GetService("Players").LocalPlayer
  if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
- lp.Character.HumanoidRootPart.CFrame = CFrame.new(0, 50, 0)
+ lp.Character.HumanoidRootPart.CFrame = CFrame.new(-120, 30, 250)
  end
  end,
 })
@@ -141,7 +141,7 @@ TeleportTab:CreateButton({
  Callback = function()
  local lp = game:GetService("Players").LocalPlayer
  if lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
- lp.Character.HumanoidRootPart.CFrame = CFrame.new(500, 50, 500)
+ lp.Character.HumanoidRootPart.CFrame = CFrame.new(1000, 50, 1000)
  end
  end,
 })
