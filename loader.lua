@@ -51,7 +51,6 @@ FarmingTab:CreateToggle({
  _G.AutoResources = Value
  task.spawn(function()
  while _G.AutoResources do
- task.wait(1)
  for _, obj in pairs(workspace:GetDescendants()) do
  if not _G.AutoResources then break end
  if obj:IsA("Model") and (obj:FindFirstChild("Health") or obj.Name:lower():find("rock") or obj.Name:lower():find("tree") or obj.Name:lower():find("plant")) then
@@ -59,10 +58,11 @@ FarmingTab:CreateToggle({
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
  lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0)
- task.wait(1.5)
+ task.wait(2)
  end
  end
  end
+ task.wait(1)
  end
  end)
  end,
@@ -75,7 +75,6 @@ FarmingTab:CreateToggle({
  _G.AutoEggs = Value
  task.spawn(function()
  while _G.AutoEggs do
- task.wait(1)
  for _, egg in pairs(workspace:GetDescendants()) do
  if not _G.AutoEggs then break end
  if egg:IsA("Model") and egg.Name:lower():find("egg") then
@@ -83,10 +82,11 @@ FarmingTab:CreateToggle({
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
  lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 2, 0)
- task.wait(1.5)
+ task.wait(2)
  end
  end
  end
+ task.wait(1)
  end
  end)
  end,
@@ -100,11 +100,21 @@ local function getClosestMonster()
  local shortestDist = math.huge
  
  for _, v in pairs(workspace:GetDescendants()) do
- if v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v ~= LocalPlayer.Character then
+ if v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+ local isPlayer = false
+ for _, player in pairs(Players:GetPlayers()) do
+ if player.Character == v then
+ isPlayer = true
+ break
+ end
+ end
+ 
+ if not isPlayer and v ~= LocalPlayer.Character then
  local dist = (LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude
  if dist < shortestDist then
  shortestDist = dist
  target = v
+ end
  end
  end
  end
@@ -119,7 +129,7 @@ FarmingTab:CreateToggle({
  _G.AutoMonster = Value
  task.spawn(function()
  while _G.AutoMonster do
- task.wait(0.5)
+ task.wait(1)
  local target = getClosestMonster()
  if target and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
  local hrp = LocalPlayer.Character.HumanoidRootPart
