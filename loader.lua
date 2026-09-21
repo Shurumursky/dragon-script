@@ -51,18 +51,22 @@ FarmingTab:CreateToggle({
  _G.AutoResources = Value
  task.spawn(function()
  while _G.AutoResources do
+ local found = false
  for _, obj in pairs(workspace:GetDescendants()) do
  if not _G.AutoResources then break end
- if obj:IsA("Model") and (obj:FindFirstChild("Health") or obj.Name:lower():find("rock") or obj.Name:lower():find("tree") or obj.Name:lower():find("plant")) then
+ if obj:IsA("Model") and obj:FindFirstChild("Health") and (obj.Name:lower():find("rock") or obj.Name:lower():find("tree") or obj.Name:lower():find("plant") or obj.Name:lower():find("bush")) then
  local part = obj.PrimaryPart or obj:FindFirstChildWhichIsA("BasePart")
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
+ found = true
  lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 3, 0)
- task.wait(2)
+ task.wait(2.5)
  end
  end
  end
+ if not found then
  task.wait(1)
+ end
  end
  end)
  end,
@@ -75,18 +79,22 @@ FarmingTab:CreateToggle({
  _G.AutoEggs = Value
  task.spawn(function()
  while _G.AutoEggs do
+ local found = false
  for _, egg in pairs(workspace:GetDescendants()) do
  if not _G.AutoEggs then break end
- if egg:IsA("Model") and egg.Name:lower():find("egg") then
+ if egg:IsA("Model") and (egg.Name:lower():find("egg") or egg.Name:lower():find("nest")) and egg:FindFirstChildWhichIsA("BasePart") then
  local part = egg.PrimaryPart or egg:FindFirstChildWhichIsA("BasePart")
  local lp = game:GetService("Players").LocalPlayer
  if part and lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") then
+ found = true
  lp.Character.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 2, 0)
- task.wait(2)
+ task.wait(2.5)
  end
  end
  end
+ if not found then
  task.wait(1)
+ end
  end
  end)
  end,
@@ -129,11 +137,13 @@ FarmingTab:CreateToggle({
  _G.AutoMonster = Value
  task.spawn(function()
  while _G.AutoMonster do
- task.wait(1)
  local target = getClosestMonster()
  if target and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
  local hrp = LocalPlayer.Character.HumanoidRootPart
  hrp.CFrame = target.HumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
+ task.wait(1)
+ else
+ task.wait(1)
  end
  end
  end)
